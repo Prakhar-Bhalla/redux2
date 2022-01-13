@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { addTodoError, addTodoLoading, addTodoSuccess, getData, getTodoError, getTodoLoading, getTodoSuccess } from "../features/Todos/actions";
+import { addData, getData } from "../features/Todos/actions";
 
 export const Todos = () => {
     const [text,setText] = useState("");
@@ -23,32 +23,20 @@ export const Todos = () => {
     });
 
     const dispatch = useDispatch();
+
     const handleChange = (event) => {
         setText(event.target.value);
     }
-    const addTodosList = async() => {
-       try {
-        dispatch(addTodoLoading());
-        let res = await fetch("http://localhost:3005/todos", {
-            method : "POST",
-            body : JSON.stringify({task : text}),
-            headers : {
-                "Content-Type" : "application/json"
-            }
-        })
-        let data = await res.json();
-        dispatch(addTodoSuccess(data));
-        getTodos();
-       } catch(e) {
-        dispatch(addTodoError(e));
-       }
+
+    const addTodosList = () => {
+       dispatch(addData(text));
     }
 
     useEffect(() => {
         getTodos();
     },[]);
 
-    export const getTodos = async() => {
+    const getTodos = () => {
         dispatch(getData());
     } 
 

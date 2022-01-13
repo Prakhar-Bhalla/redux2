@@ -1,5 +1,4 @@
 import { ADD_TODO, ADD_TODO_ERROR, ADD_TODO_LOADING, ADD_TODO_SUCCESS, GET_TODO_ERROR, GET_TODO_LOADING, GET_TODO_SUCCESS, REMOVE_TODO } from "./actionType.js"
-import { getTodos } from "../../components/Todos.jsx";
 
 export const addTodoLoading = (data) => ({
     type : ADD_TODO_LOADING, 
@@ -50,19 +49,19 @@ export const addTodoLoading = (data) => ({
     }
   }
 
-  export const addData = async(dispatch) => {
+  export const addData = (text) => async(dispatch) => {
     try {
         dispatch(addTodoLoading());
         let res = await fetch("http://localhost:3005/todos", {
             method : "POST",
-            body : JSON.stringify({task : "text"}),
+            body : JSON.stringify({task : text}),
             headers : {
                 "Content-Type" : "application/json"
             }
         })
         let data = await res.json();
         dispatch(addTodoSuccess(data));
-        getTodos();
+        dispatch(getData());
        } catch(e) {
         dispatch(addTodoError(e));
        }
