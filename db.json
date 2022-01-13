@@ -3,10 +3,6 @@
     {
       "task": "Learn React",
       "id": 1
-    },
-    {
-      "task": "Learn Redux",
-      "id": 2
     }
   ]
 }
