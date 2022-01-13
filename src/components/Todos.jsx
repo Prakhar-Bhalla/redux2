@@ -33,6 +33,7 @@ export const Todos = () => {
        if(text.length !== 0)
        {
            dispatch(addData(text));
+           setText("");
            if(flag)
            {
             setFlag(false);
