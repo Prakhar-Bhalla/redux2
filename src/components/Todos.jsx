@@ -33,12 +33,8 @@ export const Todos = () => {
     }
 
     useEffect(() => {
-        getTodos();
-    },[]);
-
-    const getTodos = () => {
         dispatch(getData());
-    } 
+    },[]);
 
     return loading ? (<div>Loading....</div>) : error ? (<div>Something went wrong!</div>) : (<div style={{marginTop : "20px"}}>
     <input style={{height : "30px", outline : "none", margin : "0 5px", border : "none", borderBottom : "1px crimson solid"}} name="Task" placeholder="Enter task" onChange={handleChange}/>
