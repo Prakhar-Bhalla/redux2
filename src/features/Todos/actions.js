@@ -1,4 +1,4 @@
-import { ADD_TODO, ADD_TODO_ERROR, ADD_TODO_LOADING, ADD_TODO_SUCCESS, GET_TODO_ERROR, GET_TODO_LOADING, GET_TODO_SUCCESS, REMOVE_TODO } from "./actionType.js"
+import { ADD_TODO, ADD_TODO_ERROR, ADD_TODO_LOADING, ADD_TODO_SUCCESS, CHANGE_STATUS, GET_TODO_ERROR, GET_TODO_LOADING, GET_TODO_SUCCESS, REMOVE_TODO } from "./actionType.js"
 
 export const addTodoLoading = (data) => ({
     type : ADD_TODO_LOADING, 
@@ -54,7 +54,7 @@ export const addTodoLoading = (data) => ({
         dispatch(addTodoLoading());
         let res = await fetch("http://localhost:3005/todos", {
             method : "POST",
-            body : JSON.stringify({task : text}),
+            body : JSON.stringify({task : text, status : false}),
             headers : {
                 "Content-Type" : "application/json"
             }
@@ -65,4 +65,33 @@ export const addTodoLoading = (data) => ({
        } catch(e) {
         dispatch(addTodoError(e));
        }
+  }
+
+  export const changeStatus = (id) => async(dispatch) => {
+   try {
+      let res = await fetch(`http://localhost:3005/todos/${id}`, {
+          method : "PATCH",
+          body : JSON.stringify({status : true}),
+          headers : {
+              "Content-Type" : "application/json"
+          }
+      })
+      dispatch(getData());
+     } catch(e) {
+      
+     }
+  }
+
+  export const deleteTask = (id) => async(dispatch) => {
+   try {
+      let res = await fetch(`http://localhost:3005/todos/${id}`, {
+          method : "DELETE",
+          headers : {
+              "Content-Type" : "application/json"
+          }
+      })
+      dispatch(getData());
+     } catch(e) {
+      
+     }
   }
